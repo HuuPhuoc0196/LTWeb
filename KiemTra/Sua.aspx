@@ -43,7 +43,7 @@
         Width="122px">
     </asp:DropDownList>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <asp:Button ID="btnSelect" runat="server" ForeColor="#FF9900" Text="Chọn" />
+    <asp:Button ID="btnSelect" runat="server" ForeColor="#FF9900" Text="Chọn" OnClick="btnSelect_Click" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <br />
 &nbsp;&nbsp;&nbsp;
@@ -52,31 +52,34 @@
     <div style="margin-left: 40px">
     
         <span class="style2">Họ:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <asp:TextBox ID="TextBox1" runat="server" Width="173px"></asp:TextBox>
+        <asp:TextBox ID="txtFistName" runat="server" Width="173px"></asp:TextBox>
         <br />
         <br />
         <span class="style2">Tên:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <asp:TextBox ID="TextBox5" runat="server" Width="173px"></asp:TextBox>
+        <asp:TextBox ID="txtLastName" runat="server" Width="173px"></asp:TextBox>
         <br />
         <br />
         <span class="style2">ĐT:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <asp:TextBox ID="TextBox6" runat="server" Width="173px"></asp:TextBox>
+        <asp:TextBox ID="txtPhone" runat="server" Width="173px"></asp:TextBox>
         <br />
         <br />
         <span class="style2">Email:</span>&nbsp;&nbsp;&nbsp;&nbsp;
-        <asp:TextBox ID="TextBox7" runat="server" Width="173px"></asp:TextBox>
+        <asp:TextBox ID="txtEmail" runat="server" Width="173px"></asp:TextBox>
         <br />
         <br />
         <span class="style2">Đơn vị</span>:&nbsp;&nbsp;
-        <asp:DropDownList ID="DropDownList1" runat="server" ForeColor="#3333CC" 
+        <asp:DropDownList ID="dropDV" runat="server" ForeColor="#3333CC" 
             Width="119px">
         </asp:DropDownList>
         <br />
         <br />
-        <asp:Button ID="btnAdd" runat="server" Text="Sửa đổi" />
+        <asp:Button ID="btnAdd" runat="server" Text="Sửa đổi" OnClick="btnAdd_Click" />
 &nbsp;&nbsp;
         <asp:LinkButton ID="LinkButton1" runat="server" Font-Bold="True" 
             ForeColor="#FF9900" onclick="LinkButton1_Click">&lt;&lt; Trở về trang chủ</asp:LinkButton>
+    
+        <br />
+        <asp:Label ID="lblMess" runat="server" ForeColor="#CC0000"></asp:Label>
     
     </div>
     <div>

@@ -72,7 +72,10 @@
                 ForeColor="#FF9900" onclick="LinkButton1_Click">&lt;&lt; Trở về trang chủ</asp:LinkButton>
             <br />
             <br />
-            <asp:DataList ID="DataList1" runat="server">
+            <asp:DataList ID="DataList1" runat="server" CellPadding="4" ForeColor="#333333" Width="642px">
+                <AlternatingItemStyle BackColor="White" />
+                <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                 <HeaderTemplate>
                     <table style="width:100%;">
                         <tr>
@@ -88,7 +91,9 @@
                                 Phòng / Ban</td>
                         </tr>
                     </table>
+                    <hr />
                 </HeaderTemplate>
+                <ItemStyle BackColor="#EFF3FB" />
                 <ItemTemplate>
                     <table style="width:100%;">
                         <tr>
@@ -110,6 +115,7 @@
                         </tr>
                     </table>
                 </ItemTemplate>
+                <SelectedItemStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
             </asp:DataList>
             <br />
         </div>

@@ -39,6 +39,7 @@
             <asp:ListItem Value="1">1. Xem thông tin nhân viên</asp:ListItem>
             <asp:ListItem Value="2">2. Thêm nhân viên vào danh sách</asp:ListItem>
             <asp:ListItem Value="3">3. Sửa đổi thông tin nhân viên</asp:ListItem>
+            <asp:ListItem Value="4">4. Xóa nhân viên</asp:ListItem>
         </asp:RadioButtonList>
     </div>
     <br />

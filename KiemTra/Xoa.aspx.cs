@@ -8,10 +8,10 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.OleDb;
 
-public partial class Xem : System.Web.UI.Page
+public partial class Xoa : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
-    {                                                                
+    {
         if (!IsPostBack)
         {
             LoadNV();
@@ -44,16 +44,24 @@ public partial class Xem : System.Web.UI.Page
     {
         Server.Transfer("TrangChu.aspx"); 
     }
-    protected void btnSelect_Click(object sender, EventArgs e)
+    protected void btnDelete_Click(object sender, EventArgs e)
     {
+        string maNV = DropDownList1.SelectedValue;
         string strcn = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Users\HuuPhuoc\Desktop\LTWeb\KiemTra\App_Data\KiemTra.mdb";
         OleDbConnection cn = new OleDbConnection(strcn);
-        OleDbDataAdapter adpt = new OleDbDataAdapter("SELECT * FROM NhanVien N , DonVi D WHERE N.MaDV = D.MaDV AND MaNV = @MaNV", cn);
-        adpt.SelectCommand.Parameters.AddWithValue("@MaNV", DropDownList1.SelectedValue);
-        DataTable table = new DataTable();
-        adpt.Fill(table);
-
-        DataList1.DataSource = table;
-        DataList1.DataBind();
+        OleDbCommand cmd = new OleDbCommand("DELETE FROM NhanVien WHERE MaNV = @MaNV", cn);
+        cmd.Parameters.AddWithValue("@MaNV", maNV);
+        try
+        {
+            cn.Open();
+            cmd.ExecuteNonQuery();
+            lblMess.Text = "Bạn vừa xóa thành công nhân viên số " + DropDownList1.SelectedItem.Text + " có mã là: " + DropDownList1.SelectedValue;
+            DropDownList1.Items.Clear();
+            LoadNV();
+        }
+        catch (Exception ex)
+        {
+            lblMess.Text = "Lỗi " + ex.Message;
+        }
     }
 }

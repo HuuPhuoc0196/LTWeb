@@ -22,6 +22,7 @@ public partial class TrangChu : System.Web.UI.Page
                     case "1": Server.Transfer("Xem.aspx"); break;
                     case "2": Server.Transfer("Them.aspx"); break;
                     case "3": Server.Transfer("Sua.aspx"); break;
+                    case "4": Server.Transfer("Xoa.aspx"); break;
                 }
             }
         }
