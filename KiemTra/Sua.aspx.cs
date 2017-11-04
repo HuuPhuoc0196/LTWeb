@@ -92,13 +92,9 @@ public partial class Sua : System.Web.UI.Page
         string maNV = DropDownList2.SelectedValue;
         string strcn = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Users\HuuPhuoc\Desktop\LTWeb\KiemTra\App_Data\KiemTra.mdb";
         OleDbConnection cn = new OleDbConnection(strcn);
-        OleDbCommand cmd = new OleDbCommand("UPDATE NhanVien SET HoNV = @HoNV, TenNV = @TenNV, DienThoai = @DienThoai, Email = @Email, MaDV = @MaDV WHERE MaNV = @MaNV", cn);
-        cmd.Parameters.AddWithValue("@MaNV", maNV);
-        cmd.Parameters.AddWithValue("@HoNV", txtFistName.Text.Trim());
-        cmd.Parameters.AddWithValue("@TenNV", txtLastName.Text.Trim());
-        cmd.Parameters.AddWithValue("@DienThoai", txtPhone.Text.Trim());
-        cmd.Parameters.AddWithValue("@Email", txtEmail.Text.Trim());
-        cmd.Parameters.AddWithValue("@MaDV", Convert.ToInt32(dropDV.SelectedValue));
+        OleDbCommand cmd = new OleDbCommand("UPDATE NhanVien SET HoNV = '" + txtFistName.Text.Trim() + "', TenNV = '" + 
+            txtLastName.Text.Trim() + "', DienThoai = '" + txtPhone.Text.Trim() + "', Email = '" + 
+            txtEmail.Text.Trim() + "', MaDV = " + Convert.ToInt32(dropDV.SelectedValue) + " WHERE MaNV = '" +  maNV + "'", cn);
         try
         {
             cn.Open();
