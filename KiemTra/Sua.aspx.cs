@@ -10,6 +10,8 @@ using System.Data.OleDb;
 
 public partial class Sua : System.Web.UI.Page
 {
+    private string DV = "";
+    Label newLbl = null;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -17,6 +19,7 @@ public partial class Sua : System.Web.UI.Page
             LoadNV();
             LoadDV();
         }
+        newLbl = new Label();
     }
 
     private void LoadNV()
@@ -90,9 +93,14 @@ public partial class Sua : System.Web.UI.Page
     protected void btnAdd_Click(object sender, EventArgs e)
     {
         string maNV = DropDownList2.SelectedValue;
+        string newid = maNV;
+        if(newLbl.Text != dropDV.SelectedValue)
+        {
+            newid = NewID(dropDV);
+        }
         string strcn = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Users\HuuPhuoc\Desktop\LTWeb\KiemTra\App_Data\KiemTra.mdb";
         OleDbConnection cn = new OleDbConnection(strcn);
-        OleDbCommand cmd = new OleDbCommand("UPDATE NhanVien SET HoNV = '" + txtFistName.Text.Trim() + "', TenNV = '" + 
+        OleDbCommand cmd = new OleDbCommand("UPDATE NhanVien SET " + "MaNV = '" +  newid + "', HoNV = '" + txtFistName.Text.Trim() + "', TenNV = '" + 
             txtLastName.Text.Trim() + "', DienThoai = '" + txtPhone.Text.Trim() + "', Email = '" + 
             txtEmail.Text.Trim() + "', MaDV = " + Convert.ToInt32(dropDV.SelectedValue) + " WHERE MaNV = '" +  maNV + "'", cn);
         try
@@ -108,5 +116,44 @@ public partial class Sua : System.Web.UI.Page
         {
             lblMess.Text = "Lỗi " + ex.Message;
         }
+    }
+
+    private string NewID(DropDownList item)
+    {
+        int SL = 0;
+        string maNV = "";
+        switch (item.SelectedValue)
+        {
+            case "1": maNV = "TC"; break;
+            case "2": maNV = "TV"; break;
+            case "3": maNV = "KT"; break;
+            case "4": maNV = "KH"; break;
+            case "5": maNV = "VT"; break;
+        }
+        string strcn = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Users\HuuPhuoc\Desktop\LTWeb\KiemTra\App_Data\KiemTra.mdb";
+        OleDbConnection cn = new OleDbConnection(strcn);
+        cn = new OleDbConnection(strcn);
+        OleDbCommand cmd = new OleDbCommand("SELECT COUNT(MaNV) AS SL FROM NhanVien WHERE MaNV LIKE '" + maNV + "%'", cn);
+        OleDbDataReader read;
+        using (cn)
+        {
+            cn.Open();
+            read = cmd.ExecuteReader();
+            read.Read();
+            SL = (int)read["SL"] + 1;
+            read.Close();
+        }
+        if (SL < 10)
+            maNV += "00" + SL;
+        else if (SL < 100)
+            maNV += "0" + SL;
+        else
+            maNV += SL;
+        return maNV;
+    }
+    protected void dropDV_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        DV = dropDV.SelectedValue;
+        newLbl.Text = DV;
     }
 }

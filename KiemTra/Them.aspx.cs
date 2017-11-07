@@ -52,27 +52,11 @@ public partial class Them : System.Web.UI.Page
         txtPhone.Text = "";
     }
 
-    private int Count(string maDV)
+    private string NewID(DropDownList item)
     {
         int SL = 0;
-        string strcn = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Users\HuuPhuoc\Desktop\LTWeb\KiemTra\App_Data\KiemTra.mdb";
-        cn = new OleDbConnection(strcn);
-        OleDbCommand cmd = new OleDbCommand("SELECT COUNT(MaNV) AS SL FROM NhanVien WHERE MaNV LIKE '" + maDV + "%'", cn);
-        OleDbDataReader read;
-            using (cn)
-            {
-                cn.Open();
-                read = cmd.ExecuteReader();
-                read.Read();
-                SL = (int)read["SL"];
-                read.Close();
-            }
-        return SL + 1;
-    }
-    protected void btnAdd_Click(object sender, EventArgs e)
-    {
         string maNV = "";
-        switch (dropDV.SelectedValue)
+        switch (item.SelectedValue)
         {
             case "1": maNV = "TC"; break;
             case "2": maNV = "TV"; break;
@@ -80,12 +64,29 @@ public partial class Them : System.Web.UI.Page
             case "4": maNV = "KH"; break;
             case "5": maNV = "VT"; break;
         }
-        if (Count(maNV) < 10)
-            maNV += "00" + Count(maNV);
-        else if (Count(maNV) < 100)
-            maNV += "0" + Count(maNV);
-        else
-            maNV += Count(maNV);
+        string strcn = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Users\HuuPhuoc\Desktop\LTWeb\KiemTra\App_Data\KiemTra.mdb";
+        cn = new OleDbConnection(strcn);
+        OleDbCommand cmd = new OleDbCommand("SELECT COUNT(MaNV) AS SL FROM NhanVien WHERE MaNV LIKE '" + maNV + "%'", cn);
+        OleDbDataReader read;
+            using (cn)
+            {
+                cn.Open();
+                read = cmd.ExecuteReader();
+                read.Read();
+                SL = (int)read["SL"] + 1;
+                read.Close();
+            }
+            if (SL < 10)
+                maNV += "00" + SL;
+            else if (SL < 100)
+                maNV += "0" + SL;
+            else
+                maNV += SL;
+        return maNV;
+    }
+    protected void btnAdd_Click(object sender, EventArgs e)
+    {
+        string maNV = NewID(dropDV);
         string strcn = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Users\HuuPhuoc\Desktop\LTWeb\KiemTra\App_Data\KiemTra.mdb";
         cn = new OleDbConnection(strcn);
         OleDbCommand cmd = new OleDbCommand("INSERT INTO NhanVien VALUES( @MaNV, @HoNV, @TenNV, @DienThoai, @Email, @MaDV )", cn);
