@@ -10,8 +10,6 @@ using System.Data.OleDb;
 
 public partial class Sua : System.Web.UI.Page
 {
-    private string DV = "";
-    Label newLbl = null;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -19,7 +17,6 @@ public partial class Sua : System.Web.UI.Page
             LoadNV();
             LoadDV();
         }
-        newLbl = new Label();
     }
 
     private void LoadNV()
@@ -73,6 +70,7 @@ public partial class Sua : System.Web.UI.Page
     protected void btnSelect_Click(object sender, EventArgs e)
     {
         string maNV = DropDownList2.SelectedValue;
+        Session["MaNV"] = maNV;
         string strcn = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Users\HuuPhuoc\Desktop\LTWeb\KiemTra\App_Data\KiemTra.mdb";
         OleDbConnection cn = new OleDbConnection(strcn);
         OleDbCommand cmd = new OleDbCommand("SELECT * FROM NhanVien WHERE MaNV = @MaNV", cn);
@@ -88,15 +86,24 @@ public partial class Sua : System.Web.UI.Page
             txtPhone.Text = read["DienThoai"].ToString();
             txtEmail.Text = read["Email"].ToString();
             dropDV.SelectedValue = read["MaDV"].ToString();
+            Session["MaDV"] = dropDV.SelectedValue;
         }
     }
     protected void btnAdd_Click(object sender, EventArgs e)
     {
-        string maNV = DropDownList2.SelectedValue;
+        if (txtFistName.Text == "" || txtLastName.Text == "" || Session["MaNV"] == null)
+        {
+            lblMess.Text = "Sửa không thành công !...! Bạn cần click Chọn trước khi click Sửa Đổi";
+            return;
+        }
+        string maDV = (string)Session["MaDV"];
+        string maNV = (string)Session["MaNV"];
         string newid = maNV;
-        if(newLbl.Text != dropDV.SelectedValue)
+        if (maDV != dropDV.SelectedValue)
         {
             newid = NewID(dropDV);
+            Session["MaNV"] = newid;
+            Session["MaDV"] = dropDV.SelectedValue;
         }
         string strcn = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Users\HuuPhuoc\Desktop\LTWeb\KiemTra\App_Data\KiemTra.mdb";
         OleDbConnection cn = new OleDbConnection(strcn);
@@ -150,10 +157,5 @@ public partial class Sua : System.Web.UI.Page
         else
             maNV += SL;
         return maNV;
-    }
-    protected void dropDV_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        DV = dropDV.SelectedValue;
-        newLbl.Text = DV;
     }
 }

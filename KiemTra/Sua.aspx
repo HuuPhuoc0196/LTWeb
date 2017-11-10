@@ -69,7 +69,7 @@
         <br />
         <span class="style2">Đơn vị</span>:&nbsp;&nbsp;
         <asp:DropDownList ID="dropDV" runat="server" ForeColor="#3333CC" 
-            Width="119px" AutoPostBack="True" OnSelectedIndexChanged="dropDV_SelectedIndexChanged">
+            Width="119px" AutoPostBack="True">
         </asp:DropDownList>
         <br />
         <br />
